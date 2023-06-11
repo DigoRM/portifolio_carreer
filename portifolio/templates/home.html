@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block content %}
+<style>
+	.profile-pic{
+		max-width: 150px;
+		max-height:100px;
+		margin: 0 auto;
+		border-radius: 100%;
+	}
+
+</style>
+
+<section class="hero ">
+    <div class="hero-body">
+      <div class="title has-text-centered">
+        Projects 
+      </div>
+      <div class="container">
+
+        {% for project in projects %}
+        <section class="section">
+   
+
+
+
+
+          <div class="box">
+            <div class="box-content">
+              <div class="is-pulled-right">
+              <div class="title is-size-6 ">
+                {% for category in project.category.all %}
+                <div>
+                  <tag class="tag is-secondary is-size-6">
+                    <a href="{% url 'category_projects' category.id %}">#{{ category.name }}</a>
+                  </tag>
+                </div>
+                {% endfor %}
+              </div>
+              </div>
+              </div>
+              Languages: 
+              {% for language in project.programming_languages.all %}
+              <a href="{% url 'projects_language' language.name %} "><tag class="tag is-primary mb-2">{{language.name}}</tag></a>
+              {% endfor %}
+              <div>
+              Frameworks: 
+                {% for framework in project.frameworks.all %}
+                <a href="{% url 'projects_framework' framework.name %} "><tag class="tag is-info mb-2">{{framework.name}}</tag> </a>
+                {% endfor %}
+                <hr>
+              
+                {% if project.video %}
+                <div class="columns is-centered is-mobile">
+                    <div class="column is-half">
+                      <div class="video-container">
+                        <video class="video" controls preload="auto" poster="{{project.image.url}}">
+                          <source src="{{ project.video.url }}" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                  
+                {% elif project.image %}
+                <a href="{% url 'project_detail' project.id %}">
+                <div class="hero">
+                  <figure class="image img is-fullwidth mb-6">
+                    <img src="{{ project.image.url }}">
+                </figure>
+                </div>
+                </a>
+            </div>
+                {% else %}
+                <p class="has-text-centered mb-3">No media associated yet.</p>
+                {% endif %}
+  
+              <hr>
+
+
+
+
+                  <div class="columns">
+                    <div class="column">
+                      <a href="{% url 'project_detail' project.id %}">
+                        <h1 class="title is-size-4 mb-2">{{ project.name }}</h1>
+                        <h3 class="tag ">Published at {{ project.added_at|timesince }}</h3> 
+                        <div class="justify-content mt-5">{{ project.description }}</div>   
+                      </a>
+                    </div>
+                    </div>
+
+
+                    <footer class="card-footer has-text-centered">
+
+                        <div class="card-footer-item">
+                            <a href="{% url 'project_detail' project.id %} ">
+                                <tag class="tag is-flex is-ghost mt-10">
+                                    <i class="fa-solid fa-rocket fa-2x" style="color:black"></i>
+                                <div style="margin-left: 7px;">
+                                  {{ project.num_updates }}
+                                </div>
+                              </tag>
+                            </a>
+
+                        </div>
+                        
+                        <div class="card-footer-item">
+                          <tag class="tag is-flex is-ghost mt-10" style="margin-left: 10px;" >
+                            <div class="icon">
+                                <a href="{{project.github_link}} "><i class="fa-brands fa-square-github fa-2x" style="color:black"></i></a>
+                            </div>                  
+                          </tag>
+
+
+                        </div>
+
+    
+                      </footer>
+
+                  
+
+
+
+                </div>
+                
+        </section>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+
+  <script>
+    var player = videojs('my-video');
+  </script>

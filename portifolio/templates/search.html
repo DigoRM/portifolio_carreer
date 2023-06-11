@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %} Search {% endblock %}
+
+{% block content %}
+<section class="hero ">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8 is-offset-2">
+
+          </div>
+        </div>
+        <div class="content is-medium has-text-centered">
+            <h1>Search Resuts</h1>
+            <h3>Query "{{ query }}"</h3>
+        </div><hr>
+        <h5 class="subtitle is-4"><u> Projects:</u></h5>
+        {% for project in projects %}
+        <section class="section">
+          <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <div class="box">
+                    <div class="content is-medium has-text-centered">
+                        <a href="{% url 'project_detail' project.id %}">
+                            <h2 class="subtitle is-5">{{ project.added_at}}</h2>
+                            <h1 class="title">{{ project.name }}</h1>
+                            <p>{{ project.description }}</p>
+                        </a>
+                        
+                      </div> 
+                </div>
+
+            </div>
+          </div>
+        </section>
+        {% empty %}
+        <div class="content">
+            <p>No resuts for this query</p>
+        </div>
+            
+        {% endfor %}
+<hr>
+        <h5 class="subtitle is-4"><u> Languages:</u></h5>
+        {% for language in languages %}
+        <section class="section">
+            <div class="columns">
+              <div class="column is-8 is-offset-2">
+                  <div class="box">
+                    <div class="content is-medium has-text-centered">
+                        <a href="{% url 'projects_language' language.name %}">
+                            <h1 class="title">{{ language.name }}</h1>
+                        </a>
+                        
+                      </div>                 
+                  </div>
+
+              </div>
+            </div>
+          </section>
+        {% empty %}
+        <div class="content">
+            <p>No resuts for this query</p>
+        </div>
+            
+        {% endfor %}
+<hr>
+        <h5 class="subtitle is-4"><u> Frameworks:</u></h5>
+        {% for framework in frameworks %}
+        <section class="section">
+          <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <div class="box">
+                    <div class="content is-medium has-text-centered">
+                        <a href="{% url 'projects_framework' framework.name %}">
+                            <h1 class="title">{{ framework.name }}</h1>
+                        </a>
+                        
+                      </div>       
+                </div>
+
+            </div>
+          </div>
+        </section>
+        {% empty %}
+        <div class="content">
+            <p>No resuts for this query</p>
+        </div>
+            
+        {% endfor %}
+<hr>
+        <h5 class="subtitle is-4"><u> Categories:</u></h5>
+        {% for category in categories %}
+        <section class="section">
+          <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <div class="box">
+                    <div class="content is-medium has-text-centered">
+                        <a href="{% url 'category_projects' category.id %}">
+                            <h2 class="subtitle is-4">{{ category.added_at}}</h2>
+                            <h1 class="title">{{ category.name }}</h1>
+                            <p>{{ category.description }}</p>
+                        </a>
+                        
+                      </div>                    
+                </div>
+
+            </div>
+          </div>
+        </section>
+        {% empty %}
+        <div class="content">
+            <p>No resuts for this query</p>
+        </div>
+            
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endblock %}

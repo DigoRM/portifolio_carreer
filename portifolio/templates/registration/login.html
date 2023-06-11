@@ -1,0 +1,131 @@
+{% extends 'blog/base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    
+
+<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			background: white ;
+		}
+		.user_card {
+			width: 380px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background: black;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+
+		.form_container {
+			margin-top: 20px;
+		}
+
+		#form-title{
+			color: #fff;
+			
+		}
+
+		.login_btn {
+			width: 100%;
+			background: #33ccff ;
+			color: white ;
+		}
+		.login_btn:focus {
+			box-shadow: none ;
+			outline: 0px ;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #f7ba5b ;
+			color: white ;
+			border: 0 ;
+			border-radius: 0.25rem 0 0 0.25rem ;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none ;
+			outline: 0px ;
+		}
+
+		#messages{
+			background-color: white;
+			color: red;
+			padding: 10px;
+			margin-top: 10px;
+		}
+</style>
+
+	<div class="hero">
+		<div class="hero-body has-text-centered">
+
+			<div class="columns is-vcentered">
+				<div class="column is-4 is-offset-4">
+					<div class="card user_card" style="background-color: black;">
+						<div class="card-header has-text-centered">
+							<div class="card-header-title is-centered is-size-4" style="color:white">LOGIN</div>
+						</div>
+						<div class="card-content">
+
+
+
+
+							<form method="POST" action="">
+											{% csrf_token %}
+								<div class="field has-addons has-addons-centered">
+									<div class="button is-static" style="background: #f7ba5b ;color: white ;border: 0 ;border-radius: 0.25rem 0 0 0.25rem ;">
+										<i class="fas fa-user"></i>
+									</div>
+									<input type="text" name="username" placeholder="Username..." class="form-control">
+								</div>
+								<div class="field has-addons has-addons-centered">
+									<div class="button is-static" style="background: #f7ba5b ;color: white ;border: 0 ;border-radius: 0.25rem 0 0 0.25rem ;">
+										<i class="fas fa-key"></i>
+									</div>
+									<input type="password" name="password" placeholder="Password..." class="form-control" >
+								</div>
+		
+								<div class="d-flex justify-content-center mt-3 login_container">
+										<button class="button is-primary mt-3" type="submit" value="Login" ><div style="color:black"><strong>Ok</strong></div></button>
+								</div>
+							</form>
+		
+						</div>
+						{% for message in messages %}
+						<div class="columns">
+							<div class="column">
+								<strong><p style="color: #f7ba5b ;padding: 20px;margin-top: 20px;">* {{message}}</p></strong> 
+		
+							</div>
+						</div>
+						
+		
+						{% endfor %}
+				
+						<div class="mt-4">
+							<div class="d-flex justify-content-center links" style="color:white">
+								Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+							</div>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+{% endblock %}

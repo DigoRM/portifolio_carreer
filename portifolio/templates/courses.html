@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %} Courses {% endblock %}
+
+
+{% block content %}
+
+<style>
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+  
+    .box {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .box-content {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    @media screen and (max-width: 768px) {
+    .columns.is-mobile .column.is-one-third {
+        width: 100%;
+    }
+    }
+
+  </style>
+  
+
+<section class="hero ">
+  <div class="title has-text-centered">
+    Courses
+</div>
+  <div class="hero-body">
+    <div>
+      <strong> Categories:</strong>
+      {% for category in categories %}
+      <tag class="tag is-secondary mb-2" style="background-color: black;">
+        <a href="{% url 'category_courses' category.id %}" style="color: white;">{{ category.name }}</a>
+      </tag>
+      {% endfor %}
+    </div>
+  <div>
+      <strong> Languages:</strong>
+      {% for language in languages %}
+      <a href="{% url 'courses_language' language.name %}">
+        <tag class="tag is-primary mb-2">{{ language.name }}</tag>
+      </a>
+      {% endfor %}
+    </div>
+    <div>
+      <strong> Frameworks:</strong>
+      {% for framework in frameworks %}
+      <a href="{% url 'courses_framework' framework.name %}">
+        <tag class="tag is-info mb-2">{{ framework.name }}</tag>
+      </a>
+      {% endfor %}
+    </div>
+
+    <hr><br>
+      <div class="columns is-mobile is-multiline" >
+        {% for course in courses %}
+        <div class="column is-one-third">
+
+          <div class="box is-fullheight" style="height:100%;">
+            <div class="box-content" style="height:100%;">
+ 
+              {% if course.specialization %}
+              <div class="">
+                <i class="fa-solid fa-crown fa-beat fa-xl is-pulled-right" style="color: #f5ef4d;"></i>
+              </div>
+              {% endif %}
+              <div>
+                {% for category in course.category.all %}
+                <a href="{% url 'category_courses' category.id %}" style="color: white;">
+                  <tag class="tag is-secondary mb-2" style="background-color: black; color: white;">{{ category.name }}</tag>
+              </a>
+                {% endfor %} 
+              </div>
+ 
+              <div class="">
+                {% for language in course.programming_languages.all %}
+                  <a href="{% url 'courses_language' language.name %}"><tag class="tag is-primary mb-2">{{language.name}}</tag></a>
+                {% endfor %}
+                <div>
+                  {% for framework in course.frameworks.all %}
+                    <a href="{% url 'courses_framework' framework.name %}"><tag class="tag is-info mb-2">{{framework.name}}</tag></a>
+                  {% endfor %}
+
+                </div>
+
+                <hr>
+
+              </div>
+                <h1 class="title">{{ course.name }} </h1>
+                <h3 class="subtitle is-size-7 " style="background-color: white;">Completed at {{ course.completed_at|date:"d/m/Y" }}</h3> 
+
+                <div class="content" style="  display: flex; justify-content: center; align-items: center;">
+                    <a href="{{course.licence_link}} ">
+                      <img class="image is-48x48" src="{% static 'images/vector-certificate-icon-design.jpg' %} " alt="">
+                    </a>
+                        
+                    <a href="{{course.course_link}} ">
+                      <img class="image is-48x48 ml-6" src="{% static 'images/online-course.svg' %} " alt="">
+                    </a>
+                </div> 
+                                          
+                <div class="justify-content mt-1">{{ course.description|linebreaks }}</div>
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RM | {% block title %} {% endblock %}</title>
+        <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bulma@0.9.2/js/navbar-burger.min.js"></script>
+        <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+        <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+        <script src="https://kit.fontawesome.com/6605ba45a3.js" crossorigin="anonymous"></script>
+      
+
+      
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+            body {
+              font-family: 'Nunito', sans-serif;
+            };
+            nav.navbar {
+            height: 6rem ;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0), 0 1px 2px 0 rgba(0, 0, 0, .06) ;
+            }
+
+            .hello-msg{
+              font-size: 12px;
+              color: #000;
+              margin-right: 5px;
+              margin-top: 20px;
+            }
+
+
+
+            .navbar{
+              background-color: black;
+            }
+
+            .navbar-item{
+              color:white;
+              background-color: black;
+
+            }
+
+
+
+
+
+
+        </style>
+      </head>
+      
+      <body>
+
+
+        <nav class="navbar is-black has-text-white" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="{% url 'user_profile' 1 %} ">
+              <img src="{% static 'images/logos/rm_tech_bar_2.png' %}">
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" style="color: #fff;">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          
+
+        
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start ">
+
+             
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-item is-size-6" href="{% url 'home' %}">Projects</a>
+                <div class="navbar-dropdown has-background-black">
+                  <a href="{% url 'categories' %}" class="navbar-item is-size-6">Categories</a>
+                </div>
+              </div>
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-item is-size-6" href="/courses">Courses</a>
+                
+              </div>
+            </div>
+
+
+
+          </div>
+          </div>
+          <div class="navbar-end  ">
+            <div class="mb-4">
+              <form method="get" action="{% url 'search' %}">
+                <div class="navbar-item">
+                  <div class="field has-addons is-centered">
+                    
+                  </div>
+
+                </div>
+                <div class="control has-icons-left">
+                    <input class="input is-rounded"  name="query" type="text" placeholder="Search">
+                    <span class="icon is-left">
+                    <i class="fa fa-search"></i>
+                    </span>
+                </div>
+              </form>
+            </div>
+          
+            <div class="navbar-item">
+              {% if request.user.is_authenticated %}
+              <span class = 'navbar-item is-size-6 '>Hello, {{request.user}}! 
+                <a class="navbar-item" style="background-color: black; color:white" href="{% url 'logout' %}"><div class="tag is-danger">Logout</div></a>
+              </span>
+              {% else %}
+              <span class = 'navbar-item is-size-6 '>
+                <a class="navbar-item" style="background-color: black; color:white" href="{% url 'register' %}"><div class="tag is-warning">Register</div> </a>
+                <a class="navbar-item" style="background-color: black; color:white" href="{% url 'login' %}"><div class="tag is-info">Login</div></a>  
+                       
+              {% endif %}
+            </span>
+            </div>
+
+        </nav>
+        
+
+
+
+
+
+
+
+
+ 
+    <section class="section">
+    {% block content %}
+    {% endblock %}
+    </section>
+</body>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Copyright (c) 2023 - RM Tech Blog by Rodrigo Rodrigues Marcolino.</strong> 
+      </p>
+      <p style="text-align: center;">
+        <a href="https://www.instagram.com/digo.marcolino/">
+        <img style="height: 30px; width: 30px;" src="{% static 'images/intalogo.jpg' %}" >
+        <a href="https://www.linkedin.com/in/rodrigo-rodrigues-marcolino-aa1a3617a/">
+          <img style="height: 30px; width: 30px;" src="{% static 'images/logo-linkedin.png' %}" >
+      </a>
+    </p>
+    </div>
+  </footer>
+
+</html>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+// Get all "navbar-burger" elements
+const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+// Add a click event on each of them
+$navbarBurgers.forEach( el => {
+  el.addEventListener('click', () => {
+
+    // Get the target from the "data-target" attribute
+    const target = el.dataset.target;
+    const $target = document.getElementById(target);
+
+    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+    el.classList.toggle('is-active');
+    $target.classList.toggle('is-active');
+
+  });
+
+});
+
+
+
+});
+
+
+  </script>

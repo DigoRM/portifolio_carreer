@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block title %} Unauthorized {% endblock %}
+
+{% block content %}
+<div class="hero">
+    <img src="/media/forbiddengif.gif">
+
+    <p><h3 class="subtitle is-5">I'm sorry {{user}}, it seems you don't have the required permission for this.</h3></p> 
+    <p class="subtitle is-6 ">If you want to contribute with this blog, send an email with your username to rmarcolino.consultoria@gmail.com</p>
+    <a class="subtitle is-6" style="text-decoration: underline blue 1px;color:blue;" href="{% url 'profile' %}">Don't forget complete you profile, in order to earn the required permissions :)</a>
+  </div>
+  {% endblock %}

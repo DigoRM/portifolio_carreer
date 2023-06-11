@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Details {% endblock %}
+
+
+{% block content %}
+
+
+
+<section class="hero is-fullheight ">
+    <div class="hero-body">
+        <div class="container">
+            New Update
+            <form action="{% url 'new_update' project.id %} " method="POST"  enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+              <button type="submit" class="btn-success">ok</button>
+
+            </form>
+          </div>
+    </div>
+  </section>
+
+{% endblock %}

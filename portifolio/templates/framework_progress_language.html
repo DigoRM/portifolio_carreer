@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %} Frameworks {% endblock %}
+
+{% block content %}
+
+
+<style>
+    .progress-bar-container {
+      width: 100%;
+      height: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #4CAF50;
+    }
+
+	.profile-pic{
+		max-width: 300px;
+		max-height:300px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+
+</style>
+
+<br>
+<div class="box ">
+    <div class="columns is-horizontal is-vcentered">
+        {% if framework_projects %}
+
+        <div class="column">
+            <div class="card is-vcentered">
+                <div class="card-content">
+
+                    <div style="text-align: center;">
+    
+                        <div class="content">
+                            <table>
+                                <thead>
+                                  <tr>
+                                    <th>Framework</th>
+                                    <th>Projects</th>
+                                    <th>Courses</th>
+                                    <th>Score</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for framework_project in framework_projects %}
+                                    <tr>
+                                        <td>{{ framework_project.name }}</td>
+                                        <td><a href="{% url 'projects_framework' framework_project.name %}">{{ framework_project.project_count }}</a></td>
+                                        <td><a href="{% url 'courses_framework' framework_project.name %}">{{framework_project.course_count}}</a> </td>
+                                        <td>
+                                            <progress class="progress is-primary" value="{{ framework_project.score }}" max="100">{{ framework_project.score }}%</progress>{{ framework_project.score }}%
+        
+                                          </td>                                </tr>
+                                    {% endfor %}
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                          
+                        
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="column">
+            <div class="card is-vcentered">
+                <div class="card-content">
+
+                    <div style="text-align: center;">
+    
+                        <div class="card-content">
+                            <h4 class="subtitle">No framework specified yet.</h4>
+                        </div>
+                          
+                        
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

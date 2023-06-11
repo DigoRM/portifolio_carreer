@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %} User Profile {% endblock %}
+
+{% block content %}
+
+
+<style>
+    .progress-bar-container {
+      width: 100%;
+      height: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #4CAF50;
+    }
+
+	.profile-pic{
+		max-width: 350px;
+		max-height:350px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+
+</style>
+
+<br>
+<div class="box ">
+    <div class="columns is-horizontal ">
+        <div class="column">
+                <div calss="content">
+                    <div class="card-header-title is-centered is-vcentered">
+                        <strong class="title is-5">{{ customer.name }}</strong>
+                        
+                    </div>
+                    <div class="has-text-centered">
+                        <h4 class="subtitle is-size-6">{{customer.user.email}} </h4>
+                    </div>
+                    <hr>
+                    <div class="has-text-centered">
+                        {% if customer.profile_pic %}
+                        <img class="profile-pic" src="{{customer.profile_pic.url}}" >
+                        {% endif %}
+                    </div><br>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="card-content has-text-centered">
+                                <p><strong>Company: </strong>{{ customer.company }}</p>
+                            </div>
+                            <div class="card-content has-text-centered">
+                                <p><strong>Role: </strong>{{ customer.role }}</p>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card-content has-text-justified">
+                                <p><strong>Interests: </strong><div class="ml-2">{{ customer.interests|linebreaks }}</div></p> 
+            
+                            </div>  
+                        </div>
+                    </div>
+
+
+                </div>
+               
+        </div>
+        <div class="column">
+                <div class="content">
+
+                    <div style="text-align: justify;">
+
+
+                        <div class="card-content">
+                            <p><strong>Soft Skills: </strong><div class="ml-2">{{ customer.soft_skills|linebreaks }}</div></p>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Hard Skills: </strong><div class="ml-2">{{ customer.hard_skills|linebreaks }}</div></p>
+                        </div>
+              
+                          
+                        
+                </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="hero">
+    <div class="content has-text-centered">
+        <table>
+            <thead>
+                <tr>
+                  <th>Languages</th>
+                  <th>Projects</th>
+                  <th>Courses</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+            <tbody>
+                {% for language_project in language_projects %}
+                <tr>
+
+                  <td>
+                    {% if language_project.framework_count > 0 %}
+                      <a href="{% url 'framework_progress_language' language_project.name %}">{{ language_project.name }}</a>
+                    {% else %}
+                      {{ language_project.name }}
+                    {% endif %}
+                  </td>
+                  <td><a href="{% url 'projects_language' language_project.name %}">{{ language_project.project_count }}</a></td>
+                  <td><a href="{% url 'courses_language' language_project.name %}">{{language_project.course_count}}</a> </td>
+                  <td>
+                    <progress class="progress is-primary" value="{{ language_project.score }}" max="100">{{ language_project.score }}%</progress>{{ language_project.score }}%
+                  </td>
+                </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+          
+    </div>
+<hr>
+    <div class="content has-text-centered">
+        <table>
+            <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Projects</th>
+                  <th>Courses</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+            <tbody>
+                {% for category_project in category_projects %}
+                <tr>
+                    <td>
+                        {% if category_project.framework_count > 0 %}
+                        <a href="{% url 'framework_progress_category2' category_project.id %}">{{ category_project.name }}</a>
+                      {% else %}
+                        {{ category_project.name }}
+                      {% endif %}
+                    </td>
+                    <td><a href="{% url 'category_projects' category_project.id %} ">{{ category_project.project_count }}</a></td>
+                    <td><a href="{% url 'category_courses' category_project.id %} ">{{ category_project.project_count }}</a></td>
+                    <td>
+                        <progress class="progress is-primary" value="{{ category_project.score }}" max="100">{{ category_project.score }}%</progress>{{ category_project.score }}%
+
+                      </td>
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

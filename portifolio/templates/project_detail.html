@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %} Details {% endblock %}
+
+
+{% block content %}
+
+
+
+<section class="hero is-fullheight ">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8 is-offset-2">
+          </div>
+        </div>
+        <section class="hero">
+          <div class="box">
+              <h3 class="title is-size-7 is-centered" style="color: #345998;">
+                <i class="fa-solid fa-solid fa-award fa-2xl is-centered" style="color: #345998;"></i>
+                {{ project.get_complexity_display }}
+              </h3>
+            <div class="box-content">
+                <div class="is-pulled-right">
+                    Languages: 
+                    {% for language in project.programming_languages.all %}
+                    <a href="{% url 'projects_language' language.name %} "><tag class="tag is-primary mb-2">{{language.name}}</tag></a>
+                    {% endfor %}
+                    <div>
+                    Frameworks: 
+                      {% for framework in project.frameworks.all %}
+                      <a href="{% url 'projects_framework' framework.name %} "><tag class="tag is-info mb-2">{{framework.name}}</tag> </a>
+                      {% endfor %}
+                  </div>
+                </div><br>
+                <div class="title is-size-5 ">
+                  Categories:
+                  {% for category in project.category.all %}  
+                  <a href="{% url 'category_projects' category.id %}" style="color: white;">
+                    <tag class="tag is-secondary mb-2" style="background-color: black; color: white;">{{ category.name }}</tag>
+                </a>
+                  {% endfor %}
+                  </div>
+
+
+
+                  <hr>
+                {% if project.video %}
+                <div class="columns is-centered is-mobile">
+                    <div class="column is-half">
+                      <div class="video-container">
+                        <video class="video" controls preload="auto" poster="{{project.image.url}}">
+                          <source src="{{ project.video.url }}" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                  
+                {% elif project.image %}
+                <a href="{% url 'project_detail' project.id %}">
+                <div class="hero">
+                  <figure class="image img is-fullwidth mb-6">
+                    <img src="{{ project.image.url }}">
+                </figure>
+                </div>
+                </a>
+            </div>
+                {% else %}
+                <p class="has-text-centered mb-3">No media associated yet.</p>
+                {% endif %}
+  
+              <hr>
+                  <div class="container">
+                    <h1 class="title is-size-3" >{{ project.name|linebreaks }}</h1>
+                      <h2 class="subtitle is-6">Completed at {{ project.created_at|timesince}} ago</h2> 
+                      <p>
+                        <h1 class="subtitle mt-4 mb-6 is-size-5 is-justified">{{ project.description|linebreaks }} </h1>
+                      </p>
+    
+                  </div>
+                  <div class="columns">
+                    {% if project.functions %}
+                    <div class="column">
+                        <div class="box">                    
+                            <p><h1 class="subtitle is-size-5 has-text-centered"><u>Functions</u></h1></p>
+                            <p><h1 class="subtitle is-size-5 has-text-justified">{{ project.functions|linebreaks }}</h1></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if project.possible_upgrades %}
+                    <div class="column">
+                        <div class="box">                    
+                            <p><h1 class="subtitle is-size-5 has-text-centered"><u>Possible Upgrades</u></h1></p>
+                            <p><h1 class="subtitle is-size-5 has-text-justified">{{ project.possible_upgrades|linebreaks }}</h1></p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <footer class="card-footer has-text-centered">
+
+                  <div class="card-footer-item">
+                      <a href="{{ project.github_link }}"><i class="fa-brands fa-square-github fa-2x" style="color: black;"></i></a>
+
+                  </div>
+                  {% if project.project_link %}
+                  <div class="card-footer-item">
+                      <div class="icon is-pulled-right mr-4">
+                        <a href="{{ project.project_link }}"><i class="fa-solid fa-globe fa-2x" style="color: black;"></i></a>
+                      </div>
+                  </div>
+                  {% endif %}                      
+
+
+                </footer>
+              </div>
+          
+        </section>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

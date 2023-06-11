@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %} projects {% endblock %}
+
+
+{% block content %}
+
+<style>
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+  
+    .card {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .card-content {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    @media screen and (max-width: 768px) {
+    .columns.is-mobile .column.is-one-half {
+        width: 100%;
+    }
+    }
+
+    .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio (change this value as needed) */
+        overflow: hidden;
+    }
+    
+    .video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (max-width: 576px) {
+        .video-container {
+            padding-bottom: 85%; /* Adjust the aspect ratio for mobile devices */
+        }
+    }
+
+  </style>
+  
+
+<section class="hero ">
+  <div class="title has-text-centered">
+    {{framework}} Projects 
+  </div>
+  <div class="hero-body">
+
+
+  <div class="columns is-mobile is-multiline">
+    {% for project in projects %}
+    <div class="column is-one-third">
+      <div class="box is-fullheight">
+        <div class="box-content">
+          <div class="content is-flex is-justify-content-flex-end">
+            <h3 class="title is-size-7" style="color: #345998;">
+              <i class="fa-solid fa-solid fa-award fa-2xl" style="color: #345998;"></i>
+              {{ project.get_complexity_display }}
+            </h3>
+          </div>
+          <div>
+              {% for category in project.category.all %}
+              <a href="{% url 'category_projects' category.id %}" style="color: white;">
+                  <tag class="tag is-secondary mb-2" style="background-color: black; color: white;">{{ category.name }}</tag>
+              </a>
+              {% endfor %}
+          </div>
+
+          <div>
+            {% for language in project.programming_languages.all %}
+            <a href="{% url 'projects_language' language.name %}">
+              <tag class="tag is-primary mb-2">{{ language.name }}</tag>
+            </a>
+            {% endfor %}
+          </div>
+          <div>
+            {% for framework in project.frameworks.all %}
+            <a href="{% url 'projects_framework' framework.name %}">
+              <tag class="tag is-info mb-2">{{ framework.name }}</tag>
+            </a>
+            {% endfor %}
+          </div><br>
+          <a href="{% url 'project_detail' project.id %}" style="color: black;">
+              <h1 class="title">{{ project.name }}</h1>
+              <h3 class="subtitle is-size-7" style="background-color: white;">Completed at {{ project.created_at|date:"d/m/Y" }}</h3>
+            </a>
+            <hr>
+          {% if project.video %}
+          <div class="columns is-centered is-mobile">
+            <div class="column is-half">
+              <div class="video-container">
+                <video class="video" controls preload="auto" poster="{{ project.image.url }}">
+                  <source src="{{ project.video.url }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          {% elif project.image %}
+          <a href="{% url 'project_detail' project.id %}">
+            <div class="hero">
+              <figure class="image img is-fullwidth mb-6">
+                <img src="{{ project.image.url }}">
+              </figure>
+            </div>
+          </a>
+          {% else %}
+          <p class="has-text-centered mb-3">No media associated yet.</p>
+          {% endif %}
+          <hr>
+          <div class="content is-pulled-right">
+            <div class="icon is-pulled-right">
+              <a href="{{ project.github_link }}"><i class="fa-brands fa-square-github fa-2x" style="color: black;"></i></a>
+            </div>
+            {% if project.project_link %}
+            <div class="icon is-pulled-right mr-4">
+              <a href="{{ project.project_link }}"><i class="fa-solid fa-globe fa-2x" style="color: black;"></i></a>
+            </div>
+            {% endif %}
+          </div>
+          <a href="{% url 'project_detail' project.id %}" style="color: black;">
+            <div class="justify-content mt-1">{{ project.description|linebreaks }}</div>
+          </a>
+          <br>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+{% endblock %}
+
+<script>
+    var player = videojs('my-video');
+  </script>
