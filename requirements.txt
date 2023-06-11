@@ -11,4 +11,3 @@ sqlparse
 typing-extensions
 whitenoise
 Pillow
-django-heroku
