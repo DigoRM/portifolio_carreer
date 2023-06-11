@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic && gunicorn career.wsgi
+web: python manage.py migrate && gunicorn career.wsgi
