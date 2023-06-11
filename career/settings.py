@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['mycareer.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://mycareer.up.railway.app']
 
 
 
