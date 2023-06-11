@@ -38,7 +38,7 @@ class CustomerForm(forms.ModelForm):
 
 
         widgets = {
-        'profile_pic': forms.ClearableFileInput(attrs={'multiple': True, 'class':'button is-rounded is-centered mb-3','style':'max-width:95%'}),
+        'profile_pic': forms.ClearableFileInput(attrs={'class':'button is-rounded is-centered mb-3','style':'max-width:95%'}),
 
         'name': forms.TextInput(attrs={ 'class': 'input is-success is-rounded is-flex mb-5', 'placeholder': 'Name','style':'max-width:100%'}),
         'company': forms.TextInput(attrs={ 'class': 'input is-success is-rounded is-flex mb-5', 'placeholder': 'Company','style':'max-width:100%'}),
