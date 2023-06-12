@@ -14,16 +14,17 @@
       align-items: stretch;
     }
   
-    .card {
+    .box {
       display: flex;
       flex-direction: column;
     }
   
-    .card-content {
+    .box-content {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
     }
+    
   
     @media screen and (max-width: 768px) {
     .columns.is-mobile .column.is-one-half {
@@ -97,7 +98,17 @@
           <a href="{% url 'project_detail' project.id %}" style="color: black;">
               <h1 class="title">{{ project.name }}</h1>
               <h3 class="subtitle is-size-7" style="background-color: white;">Completed at {{ project.created_at|date:"d/m/Y" }}</h3>
-            </a>
+          </a>
+          <div class="content is-pulled-right">
+            <div class="icon is-pulled-right ">
+              <a href="{{ project.github_link }}"><i class="fa-brands fa-square-github fa-2x" style="color: black;"></i></a>
+            </div>
+            {% if project.project_link %}
+            <div class="icon is-pulled-right mr-4 ml-2">
+              <a href="{{ project.project_link }}"><i class="fa-solid fa-globe fa-2x" style="color: black;"></i></a>
+            </div>
+            {% endif %}
+          </div>
             <hr>
           {% if project.video %}
           <div class="columns is-centered is-mobile">
@@ -122,20 +133,13 @@
           <p class="has-text-centered mb-3">No media associated yet.</p>
           {% endif %}
           <hr>
-          <div class="content is-pulled-right">
-            <div class="icon is-pulled-right">
-              <a href="{{ project.github_link }}"><i class="fa-brands fa-square-github fa-2x" style="color: black;"></i></a>
-            </div>
-            {% if project.project_link %}
-            <div class="icon is-pulled-right mr-4">
-              <a href="{{ project.project_link }}"><i class="fa-solid fa-globe fa-2x" style="color: black;"></i></a>
-            </div>
-            {% endif %}
+
+          <div>
+            <a href="{% url 'project_detail' project.id %}" style="color: black;">
+              <div class="justify-content">{{ project.description|linebreaks }}</div>
+            </a>
           </div>
-          <a href="{% url 'project_detail' project.id %}" style="color: black;">
-            <div class="justify-content mt-1">{{ project.description|linebreaks }}</div>
-          </a>
-          <br>
+
         </div>
       </div>
     </div>
