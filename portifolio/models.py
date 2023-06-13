@@ -99,6 +99,7 @@ class Course(models.Model):
     category = models.ManyToManyField(Category, related_name='course_category')
     name = models.CharField(max_length=255,  null=True, blank=True)
     company = models.CharField(max_length=255, null=True, blank=True) 
+    company_icon = models.FileField(upload_to ='company_icon', null=True, blank=True)
     description = models.TextField(null=True, blank=True) 
     courses = models.IntegerField(blank=True, null=True)
     specialization = models.BooleanField(default=False)

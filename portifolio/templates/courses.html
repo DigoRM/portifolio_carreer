@@ -71,13 +71,19 @@
 
           <div class="box is-fullheight" style="height:100%;">
             <div class="box-content" style="height:100%;">
- 
               {% if course.specialization %}
               <div class="">
                 <i class="fa-solid fa-crown fa-beat fa-xl is-pulled-right" style="color: #f5ef4d;"></i>
               </div>
               {% endif %}
-              <div>
+              
+              {% if course.company_icon %}
+              <div class="is-pulled-right">
+                <img class="image is-pulled-rigth" src="{{course.company_icon.url}}" style="width: 150px; height: 70px;">
+              </div>
+              {% endif %}
+
+              <div><br>
                 {% for category in course.category.all %}
                 <a href="{% url 'category_courses' category.id %}" style="color: white;">
                   <tag class="tag is-secondary mb-2" style="background-color: black; color: white;">{{ category.name }}</tag>

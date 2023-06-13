@@ -92,10 +92,10 @@
         <table>
             <thead>
                 <tr>
-                  <th>Languages</th>
-                  <th>Projects</th>
-                  <th>Courses</th>
-                  <th>Score</th>
+                  <th style="width: 30%;">Languages</th>
+                  <th style="width: 15%;">Projects</th>
+                  <th style="width: 15%;">Courses</th>
+                  <th style="width: 40%;">Score</th>
                 </tr>
               </thead>
             <tbody>
@@ -122,38 +122,37 @@
           
     </div>
 <hr>
-    <div class="content has-text-justified">
-        <table>
-            <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Projects</th>
-                  <th>Courses</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-            <tbody>
-                {% for category_project in category_projects %}
-                <tr>
-                    <td>
-                        {% if category_project.framework_count > 0 %}
-                        <a href="{% url 'framework_progress_category2' category_project.id %}">{{ category_project.name }}</a>
-                      {% else %}
-                        {{ category_project.name }}
-                      {% endif %}
-                    </td>
-                    <td><a href="{% url 'category_projects' category_project.id %} ">{{ category_project.project_count }}</a></td>
-                    <td><a href="{% url 'category_courses' category_project.id %} ">{{ category_project.project_count }}</a></td>
-                    <td>
-                        <progress class="progress is-primary" value="{{ category_project.score }}" max="100">{{ category_project.score }}%</progress>{{ category_project.score }}%
+<div class="content has-text-centered">
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 30%;">Category</th>
+        <th style="width: 15%;">Projects</th>
+        <th style="width: 15%;">Courses</th>
+        <th style="width: 40%;">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category_project in category_projects %}
+      <tr>
+        <td>
+          {% if category_project.framework_count > 0 %}
+          <a href="{% url 'framework_progress_category2' category_project.id %}">{{ category_project.name }}</a>
+          {% else %}
+          {{ category_project.name }}
+          {% endif %}
+        </td>
+        <td><a href="{% url 'category_projects' category_project.id %} ">{{ category_project.project_count }}</a></td>
+        <td><a href="{% url 'category_courses' category_project.id %} ">{{ category_project.project_count }}</a></td>
+        <td>
+          <progress class="progress is-primary" value="{{ category_project.score }}" max="100">{{ category_project.score }}%</progress>{{ category_project.score }}%
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-                      </td>
-                </tr>
-                {% endfor %}
-            
-            </tbody>
-        </table>
-    </div>
 </div>
 
 
