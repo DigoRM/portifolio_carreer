@@ -143,7 +143,7 @@
           {% endif %}
         </td>
         <td><a href="{% url 'category_projects' category_project.id %} ">{{ category_project.project_count }}</a></td>
-        <td><a href="{% url 'category_courses' category_project.id %} ">{{ category_project.project_count }}</a></td>
+        <td><a href="{% url 'category_courses' category_project.id %} ">{{ category_project.course_count }}</a></td>
         <td>
           <progress class="progress is-primary" value="{{ category_project.score }}" max="100">{{ category_project.score }}%</progress>{{ category_project.score }}%
         </td>
